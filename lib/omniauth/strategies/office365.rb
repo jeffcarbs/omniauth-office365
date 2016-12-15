@@ -47,6 +47,10 @@ module OmniAuth
       OFFICE365_JWT_ORGANIZATION_IDENTIFER = 'tid'.freeze
       OFFICE365_JWT_USER_PRINCIPAL_NAME = 'upn'.freeze
 
+      def callback_url
+        options[:redirect_uri] || (full_host + script_name + callback_path)
+      end
+
       def decoded_jwt_token
         JWT.decode(access_token.token, nil, false)
       rescue JWT::DecodeError
