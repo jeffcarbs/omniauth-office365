@@ -38,6 +38,14 @@ module OmniAuth
       def raw_info
         @raw_info ||= access_token.get('api/v2.0/me').parsed
       end
+
+      private
+
+      # Overriding this method provided by OmniAuth::Strategies - we don't want the querystring appended to the callback_url
+      # See https://github.com/omniauth/omniauth-oauth2/issues/81
+      def callback_url
+        full_host + script_name + callback_path
+      end
     end
   end
 end
